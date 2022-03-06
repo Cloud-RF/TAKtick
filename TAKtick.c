@@ -213,9 +213,7 @@ static void add_participant(SOCKET listen_socket, struct server_context_type *ct
 {
 	SOCKET participant_socket;
 	struct participant_list_struct *pnt, *prev_pnt, *new_entry;
-
 	participant_socket = accept(listen_socket, NULL, NULL);
-
 #if defined(_MSC_VER) || defined(__MINGW32__)
 	if (INVALID_SOCKET == participant_socket) return;
 #else
@@ -244,7 +242,6 @@ static void add_participant(SOCKET listen_socket, struct server_context_type *ct
 	}
 
 	/* create a new entry for this new participant */
-
 	new_entry = (struct participant_list_struct *)malloc(sizeof(struct participant_list_struct));
 	assert(new_entry);
 	memset(new_entry, 0, sizeof(struct participant_list_struct));
@@ -364,6 +361,7 @@ static void parse_data(struct participant_list_struct *participant, struct serve
 				share_data(participant->buffer, size, ctx);
 				participant->length -= size;
 				memmove(participant->buffer, pnt + terminator_length, participant->length);
+				fprintf(stderr,"%s\n",participant->buffer);
 			}
 			break;
 		}
